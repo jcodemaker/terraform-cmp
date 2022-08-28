@@ -1,13 +1,17 @@
 package com.crcloud.cloudros.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.crcloud.cloudros.dao.entity.ResEcs;
 import com.crcloud.cloudros.request.ResEcsRequest;
 import com.crcloud.cloudros.response.ResEcsResponse;
 import com.crcloud.cloudros.service.ResEcsService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @Author xingcl
@@ -80,6 +84,25 @@ public class EcsController {
             resEcsResponse.setName(resEcs.getName());
             resEcsResponse.setDescription(resEcs.getDescription());
             return new ResponseEntity<ResEcsResponse>(resEcsResponse, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>("internal server error ", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
+     * 查询ECS接口
+     * @return
+     */
+    @GetMapping("")
+    public ResponseEntity<?> getEcsList(@RequestParam(name = "name") String name) throws Exception {
+
+        QueryWrapper<ResEcs> queryWrapper = new QueryWrapper<>();
+        if(StringUtils.isNotBlank(name)){
+            queryWrapper.lambda().like(ResEcs::getName, name);
+        }
+        List<ResEcs> resEcsList = resEcsService.list(queryWrapper);
+        if (resEcsList!= null){
+            return new ResponseEntity<List<ResEcs>>(resEcsList, HttpStatus.OK);
         }else{
             return new ResponseEntity<>("internal server error ", HttpStatus.INTERNAL_SERVER_ERROR);
         }
