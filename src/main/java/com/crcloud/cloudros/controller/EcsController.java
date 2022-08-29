@@ -95,6 +95,25 @@ public class EcsController {
     }
 
     /**
+     * 查询ECS接口
+     * @return
+     */
+    @GetMapping("")
+    public ResponseEntity<?> getEcsList(@RequestParam(name = "name") String name) throws Exception {
+
+        QueryWrapper<ResEcs> queryWrapper = new QueryWrapper<>();
+        if(StringUtils.isNotBlank(name)){
+            queryWrapper.lambda().like(ResEcs::getName, name);
+        }
+        List<ResEcs> resEcsList = resEcsService.list(queryWrapper);
+        if (resEcsList!= null){
+            return new ResponseEntity<List<ResEcs>>(resEcsList, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>("internal server error ", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    /**
      * 删除ECS接口
      * @return
      */
