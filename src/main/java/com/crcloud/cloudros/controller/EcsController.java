@@ -35,12 +35,14 @@ public class EcsController {
         ResEcs resEcs = new ResEcs();
         resEcs.setName(requestBody.getName());
         resEcs.setDescription(requestBody.getDescription());
+        resEcs.setUpgrade(requestBody.isUpgrade());
         boolean i = resEcsService.save(resEcs);
         if (i){
             ResEcsResponse resEcsResponse = new ResEcsResponse();
             resEcsResponse.setId(resEcs.getId());
             resEcsResponse.setName(resEcs.getName());
             resEcsResponse.setDescription(resEcs.getDescription());
+            resEcsResponse.setUpgrade(resEcs.isUpgrade());
             return new ResponseEntity<ResEcsResponse>(resEcsResponse, HttpStatus.CREATED);
         }else{
             return new ResponseEntity<>("internal server error ", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -57,12 +59,14 @@ public class EcsController {
         resEcs.setId(id);
         resEcs.setName(requestBody.getName());
         resEcs.setDescription(requestBody.getDescription());
+        resEcs.setUpgrade(requestBody.isUpgrade());
         boolean i = resEcsService.updateById(resEcs);
         if (i){
             ResEcsResponse resEcsResponse = new ResEcsResponse();
             resEcsResponse.setId(resEcs.getId());
             resEcsResponse.setName(resEcs.getName());
             resEcsResponse.setDescription(resEcs.getDescription());
+            resEcsResponse.setUpgrade(resEcs.isUpgrade());
             return new ResponseEntity<ResEcsResponse>(resEcsResponse, HttpStatus.OK);
         }else{
             return new ResponseEntity<>("internal server error ", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -83,6 +87,7 @@ public class EcsController {
             resEcsResponse.setId(resEcs.getId());
             resEcsResponse.setName(resEcs.getName());
             resEcsResponse.setDescription(resEcs.getDescription());
+            resEcsResponse.setUpgrade(resEcs.isUpgrade());
             return new ResponseEntity<ResEcsResponse>(resEcsResponse, HttpStatus.OK);
         }else{
             return new ResponseEntity<>("internal server error ", HttpStatus.INTERNAL_SERVER_ERROR);

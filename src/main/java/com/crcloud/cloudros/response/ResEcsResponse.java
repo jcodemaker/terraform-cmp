@@ -15,4 +15,6 @@ public class ResEcsResponse {
 
     private String description;
 
+    private boolean upgrade;
+
 }

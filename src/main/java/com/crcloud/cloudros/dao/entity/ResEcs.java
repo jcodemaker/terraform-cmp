@@ -30,4 +30,6 @@ public class ResEcs extends Model<ResEcs> {
     private String name;
 
     private String description;
+
+    private boolean upgrade;
 }

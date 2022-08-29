@@ -14,4 +14,6 @@ public class ResEcsRequest {
 
     private String description;
 
+    private boolean upgrade;
+
 }
